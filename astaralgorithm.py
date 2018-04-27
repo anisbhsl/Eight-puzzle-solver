@@ -7,7 +7,7 @@ class puzzle:
 		self.fronts=[]  #will act as a 2D list of frindges or frontier
 		self.goalNode=['0','1','2','3','4','5','6','7','8']  #our goal node
 		self.startNode=start  #initializing the puzzle 
-		self.previousNode=[]  #will keep track of expanded nodes 
+		self.previousNode=[]  #will keep track of expanded nodes 										
 
 
 	# Heuristic Function
@@ -19,7 +19,7 @@ class puzzle:
 			if node[i]!=self.goalNode[i]:
 				hMisplaced+=1
 		for i in node:
-			hDist+=math.fabs(node.index(i)-self.GoalNode.index(i))  # Manhatton distance 
+			hDist+=math.fabs(node.index(i)-self.goalNode.index(i))  # Manhatton distance 
 
 		totalH=hMisplaced+hDist  # total heuristic value
 
@@ -33,12 +33,14 @@ class puzzle:
 		subNode=[]
 		zeroLocation=node.index('0')+1
 		subNode.extend(node)
-		boundry=self.boundries(zeroLocation)
+		#boundry=self.boundries(zeroLocation)
 		self.fronts=[]
+
+		##	return
 
 		if zeroLocation+3<=9:
 			tmp=subNode[node.index('0')]
-			subNode[node.index['0']]=subNode[node.index('0')+3]
+			subNode[node.index('0')]=subNode[node.index('0')+3]
 			subNode[node.index('0')+3]=tmp
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
@@ -46,30 +48,32 @@ class puzzle:
 			print("UP ")
 		if zeroLocation-3>=1:
 			tmp=subNode[node.index('0')]
-			subNode[node.index['0']]=subNode[node.index('0')-3]
+			subNode[node.index('0')]=subNode[node.index('0')-3]
 			subNode[node.index('0')-3]=tmp
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
 			print("DOWN ")
 
-		if zeroLocation-1>=boundry[0]:
+		if (zeroLocation-1>=1) or (zeroLocation-1>=4) or (zeroLocation-1>=7):
 			tmp=subNode[node.index('0')]
-			subNode[node.index['0']]=subNode[node.index('0')-1]
+			subNode[node.index('0')]=subNode[node.index('0')-1]
 			subNode[node.index('0')-1]=tmp
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
 			print("LEFT ")
 
-	    if zeroLocation+1>=boundry[1]:
+		if (zeroLocation+1<=3) or (zeroLocation+1<=6) or (zeroLocation+1<=9):
 			tmp=subNode[node.index('0')]
-			subNode[node.index['0']]=subNode[node.index('0')+1]
+			subNode[node.index('0')]=subNode[node.index('0')+1]
 			subNode[node.index('0')+1]=tmp
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
 			print("RIGHT ")
+
+		
 
 	#choose the next node
 	# the node with miniumum heuristic value will be choosen
