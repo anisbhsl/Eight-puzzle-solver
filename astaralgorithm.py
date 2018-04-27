@@ -33,10 +33,9 @@ class puzzle:
 		subNode=[]
 		zeroLocation=node.index('0')+1
 		subNode.extend(node)
-		#boundry=self.boundries(zeroLocation)
 		self.fronts=[]
 
-		##	return
+	
 
 		if zeroLocation+3<=9:
 			tmp=subNode[node.index('0')]
@@ -45,7 +44,7 @@ class puzzle:
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
-			print("UP ")
+			
 		if zeroLocation-3>=1:
 			tmp=subNode[node.index('0')]
 			subNode[node.index('0')]=subNode[node.index('0')-3]
@@ -53,7 +52,7 @@ class puzzle:
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
-			print("DOWN ")
+			
 
 		if (zeroLocation-1>=1) or (zeroLocation-1>=4) or (zeroLocation-1>=7):
 			tmp=subNode[node.index('0')]
@@ -62,7 +61,7 @@ class puzzle:
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
-			print("LEFT ")
+			
 
 		if (zeroLocation+1<=3) or (zeroLocation+1<=6) or (zeroLocation+1<=9):
 			tmp=subNode[node.index('0')]
@@ -71,7 +70,7 @@ class puzzle:
 			self.fronts.append(self.heuristic(subNode))
 			subNode=[]
 			subNode.extend(node)
-			print("RIGHT ")
+			
 
 		
 
@@ -82,9 +81,14 @@ class puzzle:
 		tNode=[]
 
 		while True:
-			hrCost=100000
+			hrCost=0
+			hrval=[]
 			for i in self.fronts:
-				if(i[-1]<hrCost):
+				hrval.append(i[-1])
+
+			hrmin=min(hrval)	
+			for i in self.fronts:
+				if(i[-1]==hrmin):
 					hrCost=i[-1]   #update hrCost to the last element value
 					nextNode=i[0:-1]  #update the list of nextNode
 					tNode=i  #copy list with heuristic value
@@ -92,6 +96,7 @@ class puzzle:
 			if tNode in self.previousNode and tNode in self.fronts:
 				self.fronts.remove(tNode) 
 				self.previousNode.append(tNode)
+				
 
 			else:
 				self.previousNode.append(tNode)
